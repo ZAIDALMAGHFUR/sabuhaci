@@ -1,0 +1,35 @@
+{
+    "name": "wagateway",
+    "version": "1.0.0",
+    "description": "WhatsApp Gateway using Node.js and Baileys",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "WhatsApp",
+        "Gateway",
+        "Node.js",
+        "Baileys"
+    ],
+    "author": "Your Name",
+    "license": "ISC",
+    "dependencies": {
+        "@whiskeysockets/baileys": "^6.7.6",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "image-size": "^1.1.1",
+        "jimp": "^0.16.13",
+        "knex": "^3.1.0",
+        "multer": "^1.4.5-lts.1",
+        "nodemailer": "^6.9.14",
+        "pg": "^8.12.0",
+        "qrcode-terminal": "^0.12.0",
+        "sharp": "^0.32.6"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    }
+}
