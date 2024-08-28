@@ -117,7 +117,7 @@
                                     <div class="col-lg-4">
                                         <div class="mb-3 mb-4">
                                             <label class="form-label" for="nama_siswa">Nama <a style="color: red">*</a></label>
-    
+
                                             @if ( auth()->user()->username  != null)
                                                 <input type="text" class="form-control" id="nama_siswa" name="nama_siswa"
                                                     placeholder="Masukkan Nama Lengkap" value="{{ auth()->user()->username }}" required>
@@ -157,11 +157,11 @@
                                                     value="{{ old('jenis_kelamin') }}">
                                                     <option value="{{ old('jenis_kelamin') }}" disabled selected>Pilih
                                                         Jenis Kelamin </option>
-                                                    <option value="Laki-laki">Laki-Laki</option>
-                                                    <option value="Perempuan">Perempuan</option>
+                                                    <option value="laki-laki">Laki-Laki</option>
+                                                    <option value="perempuan">Perempuan</option>
                                                 </select>
                                             @endif
-    
+
                                             @error('jenis_kelamin')
                                                 <div class="alert alert-warning" role="alert">
                                                     <strong>Peringatan!</strong>
@@ -177,12 +177,12 @@
                                                 value="{{ old('agama') }}">
                                                 <option value="{{ old('agama') }}" disabled selected>Pilih agama
                                                 </option>
-                                                <option value="Islam">Islam</option>
-                                                <option value="Kristen">Kristen</option>
-                                                <option value="Hindu">Hindu</option>
-                                                <option value="Budha">Budha</option>
-                                                <option value="Kong Hu Chu ">Kong Hu Chu</option>
-                                                <option value="Lainnya">Etc</option>
+                                                <option value="islam">Islam</option>
+                                                <option value="kristen">Kristen</option>
+                                                <option value="katolik">Katolik</option>
+                                                <option value="hindu">Hindu</option>
+                                                <option value="budha">Budha</option>
+                                                <option value="konghucu">Konghucu</option>
                                             </select>
                                             @error('agama')
                                                 <div class="alert alert-warning" role="alert">
@@ -246,7 +246,7 @@
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label" for="alamat">Alamat <a style="color: red">*</a></label>
-    
+
                                     @if (auth()->user()->alamat != null)
                                         <textarea class="form-control" id="alamat" rows="3" name="alamat" required placeholder="Masukkan alamat lengkap">{{ auth()->user()->alamat }}</textarea>
                                     @else
@@ -275,7 +275,7 @@
                                     <div class="col-lg-6">
                                         <div class="mb-3 mb-4">
                                             <label class="form-label" for="no_hp">No
-                                                Hp/WhatsApp <a style="color: red">*</a></label>
+                                                Hp/WhatsApp Gunakan 6282<a style="color: red">*</a></label>
                                             @if (auth()->user()->no_hp != null)
                                                 <input type="number" class="form-control" id="no_hp" name="no_hp" placeholder="Masukkan Tanggal Lahir" value="{{ auth()->user()->no_hp }}" required>
                                             @else
@@ -713,7 +713,7 @@
         </div>
         </form>
     </div>
-  
+
 
   <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
   <script src="{{ asset('assets/js/icons/feather-icon/feather.min.js') }}"></script>

@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Models\Program_studies;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class PendaftaranCambaController extends Controller
 {
@@ -48,19 +49,19 @@ class PendaftaranCambaController extends Controller
         } else {
             $pathFoto = null;
         }
-    
+
         if ($request->hasFile('berkas_ortu')) {
             $pathOrtu = $request->file('berkas_ortu')->store('public/pendaftaran/berkasortu');
         } else {
             $pathOrtu = null;
         }
-    
+
         if ($request->hasFile('berkas_siswa') ) {
             $pathSiswa = $request->file('berkas_siswa')->store('public/pendaftaran/berkassiswa');
         } else {
             $pathSiswa = null;
         }
-    
+
         if ($request->hasFile('prestasi')) {
             $pathPrestasi = $request->file('prestasi')->store('public/pendaftaran/berkasprestasi');
         } else {
@@ -81,7 +82,7 @@ class PendaftaranCambaController extends Controller
 
             'email' => $request->email,
             'no_hp' => $request->no_hp,
-            
+
             'alamat' => $request->alamat,
 
             //pendaftaran
@@ -89,7 +90,7 @@ class PendaftaranCambaController extends Controller
             'tahun_masuk' => now(),
             'pil1' => $request->pil1,
             'pil2' => $request->pil2,
-            
+
             //ayahibu
             'nama_ayah' => $request->nama_ayah,
             'nama_ibu' => $request->nama_ibu,
@@ -111,15 +112,27 @@ class PendaftaranCambaController extends Controller
             'smt6' => $request->smt6,
             'berkas_siswa' => $pathSiswa,
             'prestasi' => $pathPrestasi,
-            
+
             'status_pendaftaran' => 'Belum Terverifikasi',
             'tgl_pendaftaran' => now(),
             'created_at' => now()
         ]);
 
+        // Setelah data pendaftaran tersimpan, kirim pesan dengan menyertakan kode pendaftaran
+        $url = env('SENDER_BASE_URL') . '/send-message';
+        $phoneNumber = $request->no_hp;
+        $message = 'Terima kasih telah mendaftar. Kode pendaftaran Anda adalah: ' . $kodependaftaran;
+
+        $response = Http::post($url, [
+            'phoneNumber' => $phoneNumber,
+            'message' => $message,
+            'isGroup' => false, // Sesuaikan dengan kebutuhan
+            // 'image' => $pathFoto, // Hapus atau sesuaikan jika Anda mengirimkan file
+        ]);
+
         $pendaftaranbaru = Pendaftaran::orderBy('id','DESC')->first();
         $id_pendaftaran = $pendaftaranbaru->id;
-        
+
         //tambah insert
         $kodepembayaran = Pembayaran::id();
         echo $kodepembayaran;
@@ -145,7 +158,7 @@ class PendaftaranCambaController extends Controller
 
         Timeline::create([
             'users_id' => Auth::user()->id,
-            'status' => "Pendaftaran",    
+            'status' => "Pendaftaran",
             'pesan' => "Melakukan pendaftaran penerimaan mahasiswa baru",
             'tgl_update' => now(),
             'created_at' => now()
@@ -164,8 +177,8 @@ class PendaftaranCambaController extends Controller
         $data = Pendaftaran::where("id_pendaftaran",$id_pendaftaran)->first();
         $datPembayaran = Pembayaran::where("id_pendaftaran",$data->id)->first();
         $no=1;
-        
-        
+
+
         $datapembayaran = Pendaftaran::where("id_pendaftaran", $id_pendaftaran)->get();
         return view('dashboard.PMB.pendaftaran.pendaftaran-detail', [
             'User' => $User,
